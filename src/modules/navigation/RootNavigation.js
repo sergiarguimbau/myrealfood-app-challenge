@@ -1,36 +1,14 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { View, StyleSheet } from 'react-native';
+import { colors } from '../../styles';
+import I18t from '../../translations'
 import StackNavigationData from './stackNavigationData';
 
-const Stack = createStackNavigator();
-
 export default function NavigatorView(props) {
-  // if (authState.isLoggedIn || authState.hasSkippedLogin) {
-  //     return <AppNavigator />;
-  // }
-  // return <AuthScreen />;
 
-  const headerLeftComponentMenu = () => {
-    return (
-      <TouchableOpacity
-        onPress={() => props.navigation.toggleDrawer()}
-        style={{
-          paddingLeft: 10,
-        }}
-      >
-        <Image
-          source={require('../../../assets/images/drawer/menu.png')}
-          resizeMode="contain"
-          style={{
-            height: 20,
-          }}
-        />
-      </TouchableOpacity>    
-    )
-  }
+  const Stack = createStackNavigator();
 
   return (
     <Stack.Navigator>
@@ -39,13 +17,23 @@ export default function NavigatorView(props) {
           key={`stack_item-${idx+1}`}
           name={item.name} 
           component={item.component} 
-          options={{
-            headerLeft: item.headerLeft || headerLeftComponentMenu,
-            headerBackground: () => (
-              <Image style={styles.headerImage} source={item.headerBackground.source} />
-            ),
-            headerTitleStyle: item.headerTitleStyle,
-          }} 
+          options={({ route }) => {
+            let headerObj = {
+              headerLeft: item.headerLeft,
+              headerBackground: () => (
+                <View style={styles.headerImage} />
+              ),
+              headerTitleStyle: item.headerTitleStyle,
+            }
+            
+            // Change header title
+            let titleObj;
+            if (route.name == 'Home') {
+              titleObj = {title : I18t.t('home_title')}
+            }
+            const resultObj = {...headerObj, ...titleObj};
+            return resultObj;
+          }}
         />
       ))}
     </Stack.Navigator>
@@ -59,7 +47,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    width: 100 + '%',
-    height: 57,
+    width: '100%',
+    backgroundColor: colors.primary,
   },
 });

@@ -1,7 +1,11 @@
-import { compose, withState } from 'recompose';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 
-import HomeScreen from './HomeView';
+import HomeView from './HomeView';
 
-export default compose(withState('isExtended', 'setIsExtended', false))(
-  HomeScreen,
-);
+export default compose(
+  connect(
+    state => ({}),
+    dispatch => ({}),
+  ),
+)(HomeView);

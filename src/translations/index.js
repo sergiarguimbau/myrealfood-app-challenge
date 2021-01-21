@@ -2,9 +2,9 @@ import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 
 import en from './en.json';
-import ru from './ru.json';
+import es from './es.json';
 
-const translations = { en, ru };
+const translations = { en, es };
 
 const { languageTag } = RNLocalize.findBestAvailableLanguage(
   Object.keys(translations),

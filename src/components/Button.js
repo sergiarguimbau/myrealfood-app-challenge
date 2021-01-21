@@ -82,8 +82,8 @@ export default function RNSButton(props) {
 
     if (!gradientArray) {
       gradientArray = isPrimary
-        ? [colors.primaryGradientStart, colors.primaryGradientEnd]
-        : [colors.secondaryGradientStart, colors.secondaryGradientEnd];
+        ? [colors.primaryLight, colors.primaryDark]
+        : [colors.secondaryLight, colors.secondaryDark];
     }
 
     if (props.bgColor) {

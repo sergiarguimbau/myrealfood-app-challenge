@@ -1,35 +1,33 @@
-// @flow
-type AppStateType = {
-  isFirstOpen: boolean,
-};
-
-type ActionType = {
-  type: string,
-  payload?: any,
-};
-
-export const initialState: AppStateType = {
+// Initial state
+const initialState = {
   isFirstOpen: true,
 };
 
-export const SET_FIRST_OPEN = 'AppState/SET_FIRST_OPEN';
+// Actions
+const FIRST_APP_OPEN = 'AppState/FIRST_APP_OPEN';
+const START_APP_OPEN = 'AppState/START_APP_OPEN';
 
-export function setAppOpened(): ActionType {
+// Action creators
+function setAppOpened(isFirstOpen) {
   return {
-    type: SET_FIRST_OPEN,
+      type: isFirstOpen ? FIRST_APP_OPEN : START_APP_OPEN,
   };
 }
 
-export default function AppStateReducer(
-  state: AppStateType = initialState,
-  action: ActionType,
-): AppStateType {
+// Dispatch functions
+export function openApp(isFirstOpen) {
+  return dispatch => {
+      dispatch(setAppOpened(isFirstOpen))
+  }
+}
+
+// Reducer
+export default function AppStateReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case SET_FIRST_OPEN:
-      return {
-        ...state,
+    case FIRST_APP_OPEN:
+      return Object.assign({}, state, {
         isFirstOpen: false,
-      };
+      });
     default:
       return state;
   }
