@@ -133,11 +133,11 @@ android {
         }
     }
     defaultConfig {
-        applicationId "com.reactnativestarter"
+        applicationId "com.myrealfood.appchallenge"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "2.1"
+        versionCode 1
+        versionName "0.1.0"
     }
     splits {
         abi {
