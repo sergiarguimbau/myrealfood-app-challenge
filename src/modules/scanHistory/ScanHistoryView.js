@@ -111,7 +111,10 @@ export default function ScanHistoryScreen(props) {
         "fat_serving":4
       },
     }
-    props.addScannedItem(item);
+
+    // Avoid adding duplicate items with the same code
+    const searchDuplicates = props.historyData.filter((searchItem) => (searchItem.code === item.code));
+    (searchDuplicates.length === 0) ? props.addScannedItem(item) : alert('Duplicated item');
   }
 
   const keyExtractorHistory = (item, index) => item.code;
