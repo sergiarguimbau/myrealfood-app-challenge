@@ -28,7 +28,7 @@ export default function NavigatorView(props) {
             
             // Change header title
             let titleObj;
-            if (route.name == 'Home') {
+            if (route.name == 'ScanHistory') {
               titleObj = {title : I18t.t('home_title')}
             }
             const resultObj = {...headerObj, ...titleObj};

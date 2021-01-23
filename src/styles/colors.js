@@ -12,6 +12,7 @@ const colors = {
   blue: '#5A81F7',
   black: '#000000',
   green: '#6DD0A3',
+  red: '#ff3b30',
   yellow: '#ffc247',
 };
 
