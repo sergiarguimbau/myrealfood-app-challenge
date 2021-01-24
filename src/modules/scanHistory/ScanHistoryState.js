@@ -22,9 +22,31 @@ function actionClearScanHistory() {
 }
 
 // Dispatch functions
-export function addScannedItem(item) {
-  return dispatch => {
-    dispatch(actionAddScannedItem(item));
+export function addScannedItem(barcode) {
+  return async dispatch => {
+
+    // Make a call to OpenFoodFacts API
+    const jsonResponse = await getResponseOpenFoodFactsAPI(barcode);
+
+    // Check if result is found
+    if (jsonResponse.status === 1) {
+      const product = jsonResponse.product;
+      const item = {
+        scan_date: new Date(),
+        barcode: barcode,
+        brands: product.brands,
+        image_url: product.image_url,
+        product_name: product.product_name,
+        ingredients_text: product.ingredients_text,
+        quantity: product.quantity,
+        nutrition_grade_fr: product.nutrition_grade_fr,
+        nutriments: product.nutriments,
+      }
+      dispatch(actionAddScannedItem(item));
+
+    } else {
+      alert('Barcode is not valid');
+    }
   }
 }
 
@@ -33,6 +55,17 @@ export function clearScanHistory() {
     dispatch(actionClearScanHistory());
   }
 }
+
+const getResponseOpenFoodFactsAPI = async (barcode) => {
+  try {
+    // @see https://world.openfoodfacts.org/data
+    const response = await fetch('https://world.openfoodfacts.org/api/v0/product/' + barcode + '.json');
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // Reducer
 export default ScanHistoryStateReducer = (state = initialState, action) => {
