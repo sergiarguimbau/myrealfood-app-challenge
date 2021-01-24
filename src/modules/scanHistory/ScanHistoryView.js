@@ -9,12 +9,17 @@ import {
   Button,
 } from 'react-native';
 
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts } from '../../styles';
+
+import Moment from 'moment'; // date formatting
 
 export default function ScanHistoryScreen(props) {
 
-  const onAdd = () => {
+  const onNewScan = () => {
+    
     const item = {
+      scan_date: new Date(),
       code: "737628064502",
       brands: "Thai Kitchen, Simply Asia",
       image_url: "https://static.openfoodfacts.org/images/products/073/762/806/4502/front_en.6.400.jpg",
@@ -121,12 +126,39 @@ export default function ScanHistoryScreen(props) {
 
   const renderHistoryItem = ({item, index}) => (
     <TouchableOpacity style={styles.historyItemContainer}>
-      <Image 
-        source={require('../../../assets/images/app_icon.png')}
-        style={styles.historyItemImage}
-        resizeMode={'contain'}
-      />
-      <Text>{'New item ' + item.code}</Text>
+      <View style={styles.historyItemImageContainer}>
+        <Image 
+          source={{uri: item.image_url}}
+          style={styles.historyItemImage}
+          resizeMode={'cover'}
+        />
+      </View>
+      <View style={styles.historyItemContentContainer}>
+        <View style={styles.historyItemTopContainer}>
+          <View style={styles.historyItemIconTextContainer}>
+            <MaterialIcon
+              name={'barcode'}
+              color={colors.black}
+              size={16}
+            />
+            <View style={styles.historyItemSmallTextContainer}>
+              <Text numberOfLines={1} style={styles.historyItemSmallText}>{item.code}</Text>
+            </View>
+          </View>
+          <View style={styles.historyItemIconTextContainer}>
+            <MaterialIcon
+              name={'history'}
+              color={colors.black}
+              size={16}
+            />
+            <View style={styles.historyItemSmallTextContainer}>
+              <Text numberOfLines={1} style={styles.historyItemSmallText}>{Moment(item.scan_date).fromNow()}</Text>
+            </View>
+          </View>
+        </View>
+        <Text numberOfLines={2} style={styles.historyItemNameText}>{item.product_name}</Text>
+        <Text numberOfLines={1} style={styles.historyItemBrandText}>{item.brands}</Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -134,7 +166,7 @@ export default function ScanHistoryScreen(props) {
     <View>
       <Button 
         title={'New Scan'} 
-        onPress={() => onAdd()}
+        onPress={() => onNewScan()}
       />
       <Button
         title={'Clear History'}
@@ -165,12 +197,49 @@ const styles = StyleSheet.create({
   // History Item
   historyItemContainer: {
     flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    padding: 8,
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#9b9b9b44'
+  },
+  historyItemImageContainer: {
+    marginEnd: 16,
   },
   historyItemImage: {
-    height: 50, 
-    width: 50
+    height: 64, 
+    width: 64,
+    borderRadius: 32,
   },
-
+  historyItemContentContainer: {
+    flex: 1,
+  },
+  historyItemTopContainer: {
+    flex: 1,
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  historyItemIconTextContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+  },
+  historyItemSmallTextContainer: {
+    marginStart: 4,
+  },
+  historyItemSmallText: {
+    fontSize: 12,
+    color: colors.black,
+    fontFamily: fonts.primaryRegular,
+  },
+  historyItemNameText: {
+    fontSize: 15,
+    color: colors.black,
+    fontFamily: fonts.primarySemiBold,
+  },
+  historyItemBrandText: {
+    fontSize: 14,
+    color: colors.black,
+    fontFamily: fonts.primaryLight
+  },
 });
