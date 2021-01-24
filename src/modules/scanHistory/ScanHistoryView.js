@@ -7,7 +7,7 @@ import {
   Text,
   Image,
   Button,
-  TextInput,
+  Modal,
 } from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,21 +15,19 @@ import { colors, fonts } from '../../styles';
 
 import I18t from '../../translations'
 import Moment from 'moment'; // date formatting
+import { RNCamera } from 'react-native-camera';
 
 export default function ScanHistoryScreen(props) {
 
-  const [barcodeInputText, setBarcodeInputText] = useState('');
-  const [buttonNewScanDisabled, setButtonNewScanDisabled] = useState(true);
+  const [cameraVisible, setCameraVisible] = useState(false);
 
-  const handleOnChangeText = text => {
-    setBarcodeInputText(text);
-    setButtonNewScanDisabled(text.length === 0)
-  };
+  const onBarCodeRead = result => {
+    // Close camera when barcode is detected
+    setCameraVisible(false);
+    onNewScan(result.data);
+  }
 
-  const onNewScan = () => {
-
-    const barcode = barcodeInputText;
-
+  const onNewScan = (barcode) => {
     // Avoid adding duplicate items with the same code
     const searchDuplicates = props.historyData.filter((searchItem) => (searchItem.barcode === barcode));
     (searchDuplicates.length === 0) ? props.addScannedItem(barcode) : alert(I18t.t('scan_history.alert_duplicate'));
@@ -79,8 +77,7 @@ export default function ScanHistoryScreen(props) {
     <View>
       <Button 
         title={I18t.t('scan_history.button_scan')} 
-        onPress={() => onNewScan()}
-        disabled={buttonNewScanDisabled}
+        onPress={() => setCameraVisible(true) }
       />
       <Button
         title={I18t.t('scan_history.button_clear')}
@@ -92,19 +89,27 @@ export default function ScanHistoryScreen(props) {
 
   return (
     <View style={styles.mainContainer}>
-      <TextInput
-        placeholder="Barcode"
-        style={styles.barcodeTextInput}
-        onChangeText={handleOnChangeText}
-        keyboardType='numeric'
-        maxLength={24}
-      />
       <FlatList 
         ListHeaderComponent={renderHistoryHeader}
         data={props.historyData}
         keyExtractor={keyExtractorHistory}
         renderItem={renderHistoryItem}
       />
+      <Modal
+        animationType='slide'
+        transparent={false}
+        visible={cameraVisible}
+        onRequestClose={() => setCameraVisible(false)}
+      >
+        <View style={{flex: 1}}>
+          <RNCamera
+            style={{flex: 1}}
+            captureAudio={false}
+            type={RNCamera.Constants.Type.back}
+            onBarCodeRead={onBarCodeRead}
+          />
+        </View>
+      </Modal>
     </View>
   );
 }
