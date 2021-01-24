@@ -12,6 +12,7 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, fonts } from '../../styles';
 
+import I18t from '../../translations'
 import Moment from 'moment'; // date formatting
 
 export default function ScanHistoryScreen(props) {
@@ -119,7 +120,7 @@ export default function ScanHistoryScreen(props) {
 
     // Avoid adding duplicate items with the same code
     const searchDuplicates = props.historyData.filter((searchItem) => (searchItem.code === item.code));
-    (searchDuplicates.length === 0) ? props.addScannedItem(item) : alert('Duplicated item');
+    (searchDuplicates.length === 0) ? props.addScannedItem(item) : alert(I18t.t('scan_history.alert_duplicate'));
   }
 
   const keyExtractorHistory = (item, index) => item.code;
@@ -165,11 +166,11 @@ export default function ScanHistoryScreen(props) {
   const renderHistoryHeader = () => (
     <View>
       <Button 
-        title={'New Scan'} 
+        title={I18t.t('scan_history.button_scan')} 
         onPress={() => onNewScan()}
       />
       <Button
-        title={'Clear History'}
+        title={I18t.t('scan_history.button_clear')}
         onPress={() => props.clearScanHistory()}
         color={colors.red}
       />
