@@ -1,3 +1,8 @@
 {
-    "home_title": "MyRealFood: Escáner"
+    "app_title": "MyRealFood: Escáner",
+    "scan_history": {
+        "alert_duplicate": "Ya tienes este código de barras escaneado",
+        "button_scan": "Nuevo Escaneo",
+        "button_clear": "Limpiar Historial"
+    }
 }

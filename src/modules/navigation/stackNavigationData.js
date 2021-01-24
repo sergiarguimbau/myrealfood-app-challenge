@@ -1,4 +1,4 @@
-import HomeScreen from '../home/HomeViewContainer';
+import ScanHistoryScreen from '../scanHistory/ScanHistoryViewContainer';
 
 import { colors, fonts } from '../../styles';
 
@@ -6,8 +6,8 @@ const headerBackground = '';
 
 const StackNavigationData = [
   {
-    name: 'Home',
-    component: HomeScreen,
+    name: 'ScanHistory',
+    component: ScanHistoryScreen,
     headerLeft: null,
     headerBackground,
     headerTitleStyle: {
