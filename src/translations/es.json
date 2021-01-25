@@ -4,5 +4,9 @@
         "alert_duplicate": "Ya tienes este código de barras escaneado",
         "button_scan": "Nuevo Escaneo",
         "button_clear": "Limpiar Historial"
+    },
+    "product_detail": {
+        "ingredients": "Ingredientes",
+        "nutriments": "Información Nutricional"
     }
 }

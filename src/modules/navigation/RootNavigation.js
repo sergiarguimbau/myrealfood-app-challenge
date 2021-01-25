@@ -30,6 +30,13 @@ export default function NavigatorView(props) {
             let titleObj;
             if (route.name == 'ScanHistory') {
               titleObj = {title : I18t.t('app_title')}
+            } else if (route.name == 'ProductDetail' && route.params) {
+              // Display product name (max length 24 chars)
+              let product_name = route.params.product.product_name
+              if (product_name.length > 24){
+                product_name = product_name.substring(0, 23).concat('…');
+              }
+              titleObj = {title : product_name}
             }
             const resultObj = {...headerObj, ...titleObj};
             return resultObj;
