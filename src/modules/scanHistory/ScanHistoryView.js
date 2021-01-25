@@ -36,7 +36,10 @@ export default function ScanHistoryScreen(props) {
   const keyExtractorHistory = (item, index) => item.barcode;
 
   const renderHistoryItem = ({item, index}) => (
-    <TouchableOpacity style={styles.historyItemContainer}>
+    <TouchableOpacity 
+      style={styles.historyItemContainer} 
+      onPress={() => props.navigation.navigate('ProductDetail', { product: item })}
+    >
       <View style={styles.historyItemImageContainer}>
         <Image 
           source={{uri: item.image_url}}
@@ -118,14 +121,6 @@ const styles = StyleSheet.create({
   // Main
   mainContainer: {
     flex: 1,
-  },
-
-  // Barcode Text Input
-  barcodeTextInput: { 
-    alignSelf: 'center', 
-    marginTop: 16, 
-    marginBottom: 4, 
-    marginHorizontal: 16, 
   },
 
   // History Item
