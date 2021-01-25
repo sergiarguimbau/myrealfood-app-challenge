@@ -9,6 +9,8 @@ import {
 
 import { colors, fonts } from '../../styles';
 
+import I18t from '../../translations'
+
 export default function ProductDetailScreen(props) {
 
   const displayNutriments = () => {
@@ -33,11 +35,11 @@ export default function ProductDetailScreen(props) {
       </View>
       <View style={styles.mainTextContainer}>
         <View style={styles.textTitleContainer}>
-          <Text style={styles.textTitle}>{'Ingredients'}</Text>
+          <Text style={styles.textTitle}>{I18t.t('product_detail.ingredients')}</Text>
         </View>
         <Text style={styles.textBody}>{product.ingredients_text}</Text>
         <View style={styles.textTitleContainer}>
-          <Text style={styles.textTitle}>{'Nutriments'}</Text>
+          <Text style={styles.textTitle}>{I18t.t('product_detail.nutriments')}</Text>
         </View>
         <Text style={styles.textBody}>{displayNutriments()}</Text>
       </View>

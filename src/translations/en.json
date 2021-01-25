@@ -4,5 +4,9 @@
         "alert_duplicate": "You've already scanned this barcode before",
         "button_scan": "New Scan",
         "button_clear": "Clear History"
+    },
+    "product_detail": {
+        "ingredients": "Ingredients",
+        "nutriments": "Nutriments"
     }
 }
